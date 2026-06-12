@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+repositories { mavenCentral() }
+
+dependencies {
+    // Lucene core — vendored jar copied from local Lucene build
+    implementation files('libs/lucene-core-11.0.0-SNAPSHOT.jar')
+    testImplementation files('libs/lucene-analysis-common-11.0.0-SNAPSHOT.jar')
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.0'
+}
+
+application {
+    mainClass = 'org.apache.lucene.sim.cli.SimCli'
+    applicationDefaultJvmArgs = ['--add-modules', 'jdk.incubator.vector']
+}
+
+test {
+    useJUnitPlatform()
+}
